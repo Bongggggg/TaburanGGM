@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penggalangan Dana Natal 2025 - GGM Ministry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="celebration" id="celebration"></div>
+    
+    <!-- Animated Background Elements -->
+    <div class="bg-pattern"></div>
+    <div class="cross-pattern"></div>
+    
+    <div class="container">
+        <header class="header">
+            <!-- Logo Section -->
+            <div class="logo-container">
+                <div class="logo">
+                    <div class="logo-content">
+                        <div class="logo-text">GGM</div>
+                        <div class="logo-subtitle">MINISTRY</div>
+                    </div>
+                </div>
+                <div class="logo-glow"></div>
+            </div>
+            
+            <h1>Penaburan Dana Natal GGM 2025</h1>
+            <p class="header-subtitle">Bersama membangun kebahagiaan Natal untuk semua</p>
+            <div class="header-verse">"Adalah lebih berbahagia memberi dari pada menerima" - Kisah Para Rasul 20:35</div>
+        </header>
+
+        <!-- Admin Button -->
+        <button class="admin-button" onclick="checkAdminLogin()" title="Admin Panel">
+            <span class="admin-icon">⚙️</span>
+        </button>
+
+        <!-- Admin Status Indicator -->
+        <div class="admin-status" id="adminStatus" style="display: none;">
+            <div class="admin-status-content">
+                <span class="admin-status-text">👤 Admin: <span id="adminUsername"></span></span>
+                <button class="admin-logout" onclick="adminLogout()" title="Logout">🚪</button>
+            </div>
+        </div>
+
+        <div class="main-display">
+            <div class="card-shine"></div>
+            
+            <div class="progress-section">
+                <div class="amount-display">
+                    <div class="amount-box" data-aos="fade-up" data-aos-delay="100">
+                        <div class="amount-icon">💰</div>
+                        <div class="amount-label">Dana Terkumpul</div>
+                        <div class="amount-value" id="currentAmount">Rp 0</div>
+                    </div>
+                    <div class="amount-box" data-aos="fade-up" data-aos-delay="200">
+                        <div class="amount-icon">🎯</div>
+                        <div class="amount-label">Target Dana</div>
+                        <div class="amount-value" id="targetAmount">Rp 50,000,000</div>
+                    </div>
+                    <div class="amount-box" data-aos="fade-up" data-aos-delay="300">
+                        <div class="amount-icon">📈</div>
+                        <div class="amount-label">Sisa Kebutuhan</div>
+                        <div class="amount-value" id="remainingAmount">Rp 50,000,000</div>
+                    </div>
+                </div>
+
+                <div class="progress-container" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="progress-track">
+                        <div class="progress-bar" id="progressBar" style="width: 0%">
+                            <div class="progress-shine"></div>
+                            <div class="progress-glow"></div>
+                        </div>
+                    </div>
+                    <div class="progress-markers">
+                        <div class="marker" style="left: 25%">25%</div>
+                        <div class="marker" style="left: 50%">50%</div>
+                        <div class="marker" style="left: 75%">75%</div>
+                    </div>
+                </div>
+                
+                <div class="progress-percentage" id="progressPercentage">0%</div>
+                <div class="progress-status" id="progressStatus">Mari bersama mencapai target kita</div>
+            </div>
+        </div>
+
+        <!-- Login Modal -->
+        <div class="login-modal" id="loginModal">
+            <div class="login-backdrop"></div>
+            <div class="login-content">
+                <div class="login-header">
+                    <div class="login-icon">🔐</div>
+                    <h2>Admin Login</h2>
+                    <p>Masukkan kredensial admin untuk mengakses panel</p>
+                </div>
+                
+                <form id="loginForm">
+                    <div class="login-form-group">
+                        <label>👤 Username</label>
+                        <input type="text" id="loginUsername" required placeholder="Masukkan username" autocomplete="username">
+                    </div>
+                    
+                    <div class="login-form-group">
+                        <label>🔑 Password</label>
+                        <div class="password-input-group">
+                            <input type="password" id="loginPassword" required placeholder="Masukkan password" autocomplete="current-password">
+                            <button type="button" class="password-toggle" onclick="togglePasswordVisibility()">
+                                <span id="passwordToggleIcon">👁️</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="login-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeLogin()">Batal</button>
+                        <button type="submit" class="btn btn-primary" id="loginBtn">
+                            <span></span> Login
+                        </button>
+                    </div>
+                    
+                    <div class="login-error" id="loginError" style="display: none;"></div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div class="admin-panel" id="adminPanel">
+            <div class="admin-backdrop"></div>
+            <div class="admin-content">
+                <button class="close-admin" onclick="toggleAdmin()">&times;</button>
+                
+                <div class="admin-header">
+                    <h2>Panel Admin</h2>
+                    <p>Kelola donasi dan target dana</p>
+                    <div class="admin-user-info">
+                        <span>Masuk sebagai: <strong id="adminPanelUsername"></strong></span>
+                        <button class="btn-logout-small" onclick="adminLogout()">Logout</button>
+                    </div>
+                </div>
+                
+                <form id="donationForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nama Donatur</label>
+                            <input type="text" id="donorName" placeholder="Anonim jika kosong">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Jumlah Donasi</label>
+                            <input type="text" id="donationAmount" required placeholder="Contoh: 500.000">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Catatan</label>
+                        <textarea id="donationNote" placeholder="Catatan tambahan (opsional)" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <span></span> Tambah Donasi
+                        </button>
+                    </div>
+                </form>
+            <div class="form-group">
+                <div class="target-section">
+                    <h3>Update Target Dana</h3>
+                        <div class="target-input-wrapper">
+                            <div class="target-input-group">
+                                <div class="target-input-label">
+                                    <label for="newTarget">Target Baru</label>
+                                    <span class="target-input-hint">Masukkan target dana yang baru</span>
+                                </div>
+                                <div class="target-input-field">
+                                    <input type="text" id="newTarget" placeholder="Contoh: Rp 200,000,000">
+                                    <button type="button" class="btn btn-primary target-update-btn" onclick="updateTarget()">
+                                        <span></span> Update Target
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <!-- Admin Settings -->
+                <div class="admin-settings">
+                    <h3>Pengaturan Admin</h3>
+                    <button type="button" class="btn btn-warning" onclick="changePassword()">
+                        <span></span> Ubah Password
+                    </button>
+                </div>
+
+                <!-- Admin Donations List -->
+                <div class="admin-donations">
+                    <h3>Kelola Donasi</h3>
+                    <div id="adminDonationsList"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Change Password Modal -->
+        <div class="change-password-modal" id="changePasswordModal">
+            <div class="login-backdrop"></div>
+            <div class="login-content">
+                <div class="login-header">
+                    <div class="login-icon"></div>
+                    <h2>Ubah Password</h2>
+                    <p>Masukkan password baru untuk keamanan</p>
+                </div>
+                
+                <form id="changePasswordForm">
+                    <div class="login-form-group">
+                        <label>Password Lama</label>
+                        <input type="password" id="oldPassword" required placeholder="Password saat ini">
+                    </div>
+                    
+                    <div class="login-form-group">
+                        <label>Password Baru</label>
+                        <input type="password" id="newPassword" required placeholder="Password baru" minlength="6">
+                    </div>
+                    
+                    <div class="login-form-group">
+                        <label>Konfirmasi Password Baru</label>
+                        <input type="password" id="confirmPassword" required placeholder="Ulangi password baru">
+                    </div>
+                    
+                    <div class="login-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeChangePassword()">Batal</button>
+                        <button type="submit" class="btn btn-primary">
+                            <span></span> Simpan
+                        </button>
+                    </div>
+                    
+                    <div class="login-error" id="changePasswordError" style="display: none;"></div>
+                </form>
+            </div>
+        </div>
+
+        <div class="donations-list" data-aos="fade-up" data-aos-delay="600">
+            <div class="donations-header">
+                <h3>Daftar Donasi Terbaru</h3>
+                <div class="donations-count" id="donationsCount">0 Donasi</div>
+            </div>
+            <div id="donationsList" class="donations-container"></div>
+        </div>
+    </div>
+
+    <!-- Modal untuk melihat detail donasi -->
+    <div id="detailModal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Supabase SDK -->
+    <script type="module">
+        import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+        window.supabase = createClient(
+            "https://olkrpfrhnsqlyvwegurk.supabase.co",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sa3JwZnJobnNxbHl2d2VndXJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyNTQ2MzksImV4cCI6MjA3MzgzMDYzOX0.Dz0CniltePbznfB4hUhcb4lov6IH0p2uvxt4ZdTZyBA"
+        );
+    </script>
+
+    <!-- File JS utama -->
+    <script src="script.js" type="module"></script>
+</body>
+</html>
