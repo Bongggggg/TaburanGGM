@@ -680,7 +680,7 @@ function getProgressStatusMessage(percentage, current, target) {
     } else if (percentage > 0) {
         return "✨ Langkah pertama yang berarti! Mari bergabung!";
     } else {
-        return "🙏 Mari bersama memulai perjalanan berkat ini!";
+        return "Mari bersama memulai perjalanan berkat ini!";
     }
 }
 
@@ -1281,3 +1281,4 @@ window.addEventListener('unhandledrejection', (e) => {
 
 // Export functions for global access
 window.loadDataSupabase = loadDataSupabase;
+
